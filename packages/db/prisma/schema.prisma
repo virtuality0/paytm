@@ -8,12 +8,38 @@ datasource db {
 }
 
 model User {
-  id         String    @id @default(cuid())
-  firstName  String?
-  lastName   String?
-  email      String?   @unique
-  number     String?   @unique
-  password   String?
-  createdAt  DateTime  @default(now())
-  modifiedAt DateTime?
+  id           String               @id @default(cuid())
+  name         String?
+  email        String?              @unique
+  number       String?              @unique
+  password     String?
+  createdAt    DateTime             @default(now())
+  modifiedAt   DateTime?
+  balance      Balance[]
+  transactions OnRampTransactions[]
+}
+
+model Balance {
+  id     String @id @default(cuid())
+  userId String @unique
+  amount Int
+  locked Int
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model OnRampTransactions {
+  id        String       @id @default(cuid())
+  amount    Int
+  userId    String
+  status    OnRampStatus
+  token     String       @unique
+  provider  String
+  startTime DateTime
+  user      User         @relation(fields: [userId], references: [id])
+}
+
+enum OnRampStatus {
+  Success
+  Failed
+  Processing
 }
