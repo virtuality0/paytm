@@ -7,32 +7,29 @@ export async function POST(request: NextRequest) {
   const { email, password, name } = await request.json();
 
   try {
-    const existingUser = await db.user.findFirst({
-      where: {
+    // For OAuth signups, password will be undefined. We upsert by email.
+    const newUser = await db.user.upsert({
+      where: { email },
+      update: { name },
+      create: {
         email,
+        name,
+        // If password provided (non-OAuth), hash and store; else leave null
+        password: password ? await bcrypt.hash(password, 10) : null,
       },
     });
 
-    if (existingUser) {
-      throw createError.Conflict(
-        "This email is associated with another account.",
-      );
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = await db.user.create({
-      data: {
-        email: email,
-        password: hashedPassword,
-        name: name,
-      },
+    // Ensure Balance exists for this user (id is unique in Balance.userId)
+    await db.balance.upsert({
+      where: { userId: newUser.id },
+      update: {},
+      create: { userId: newUser.id, amount: 0, locked: 0 },
     });
 
     return NextResponse.json(
       {
         success: true,
-        message: "User signed up successfully",
+        message: "User upserted successfully",
         user: {
           id: newUser.id,
           email: newUser.email,
@@ -42,7 +39,7 @@ export async function POST(request: NextRequest) {
     );
   } catch (err) {
     if (createError.isHttpError(err)) {
-      NextResponse.json(
+      return NextResponse.json(
         {
           success: false,
           message: err.message,
@@ -51,7 +48,7 @@ export async function POST(request: NextRequest) {
         { status: err.status },
       );
     } else {
-      NextResponse.json(
+      return NextResponse.json(
         {
           success: false,
           message: "Internal Server Error!",

@@ -2,6 +2,19 @@
 CREATE TYPE "public"."OnRampStatus" AS ENUM ('Success', 'Failed', 'Processing');
 
 -- CreateTable
+CREATE TABLE "public"."User" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT,
+    "number" TEXT,
+    "password" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "modifiedAt" TIMESTAMP(3),
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "public"."Balance" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
@@ -23,6 +36,12 @@ CREATE TABLE "public"."OnRampTransactions" (
 
     CONSTRAINT "OnRampTransactions_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "public"."User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_number_key" ON "public"."User"("number");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Balance_userId_key" ON "public"."Balance"("userId");

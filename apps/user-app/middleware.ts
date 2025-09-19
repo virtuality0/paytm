@@ -1,20 +1,22 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
-  const url = request.nextUrl;
+const isPublicRoute = createRouteMatcher([
+  "/sign-in(.*)",
+  "/sign-up(.*)",
+  "/api/webhooks/clerk",
+  "/",
+]);
 
-  if (
-    token &&
-    (url.pathname.startsWith("/signin") || url.pathname.startsWith("/signup"))
-  ) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+export default clerkMiddleware(async (auth, req) => {
+  if (!isPublicRoute(req)) {
+    await auth.protect();
   }
-  return NextResponse.next();
-}
+});
 
-// Paths you want middleware to run on
 export const config = {
-  matcher: ["/signin", "/signup", "/dashboard/:path*"],
+  matcher: [
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // always run for these
+    "/(api|trpc)(.*)",
+  ],
 };
