@@ -9,7 +9,8 @@
   --color-blue-300: #010313;
   --color-blue-200: #4c9af7;
   --color-black-100: #0a0a0a;
-  --color-gray-100: #161616;
+  --color-gray-100: #171717;
+  --color-white-100: #fafafa;
   --color-border: hsl(var(--border));
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));

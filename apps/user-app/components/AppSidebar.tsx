@@ -1,31 +1,62 @@
-"use client";
+import { Home, Send, DollarSign } from "lucide-react";
+
 import {
-  Card,
-  CardContent,
-  CardTitle,
   Sidebar,
-  SidebarHeader,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
   SidebarProvider,
 } from "@repo/ui";
-import { UserButton, useUser } from "@clerk/nextjs";
 
-function AppSidebar() {
-  const { user } = useUser();
+// Menu items.
+const items = [
+  {
+    title: "Home",
+    url: "#",
+    icon: Home,
+  },
+  {
+    title: "Transfer",
+    url: "#",
+    icon: DollarSign,
+  },
+  {
+    title: "Transactions",
+    url: "#",
+    icon: Send,
+  },
+];
+
+export default function AppSidebar() {
   return (
-    <SidebarProvider className="px-4 py-2">
-      <Sidebar className="w-[30%]">
-        <SidebarHeader>
-          <div className="text-white text-sm flex gap-4 items-center">
-            <UserButton />
-            <div>
-              <p>User</p>
-              <p>{user?.fullName}</p>
-            </div>
-          </div>
-        </SidebarHeader>
+    <SidebarProvider className="w-[25%]">
+      <Sidebar className="w-[25%] border-none">
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel className="text-white font-bold text-xl">
+              PayWise
+            </SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
       </Sidebar>
     </SidebarProvider>
   );
 }
-
-export default AppSidebar;
