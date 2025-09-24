@@ -16,17 +16,17 @@ import {
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/dashboard",
     icon: Home,
   },
   {
     title: "Transfer",
-    url: "#",
+    url: "/dashboard/transfers",
     icon: DollarSign,
   },
   {
     title: "Transactions",
-    url: "#",
+    url: "/dashboard/transactions",
     icon: Send,
   },
 ];
@@ -34,10 +34,10 @@ const items = [
 export default function AppSidebar() {
   return (
     <SidebarProvider className="w-[25%]">
-      <Sidebar className="w-[25%] border-none">
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupLabel className="text-white font-bold text-xl">
+      <Sidebar className="w-[25%] border-none bg-white text-black">
+        <SidebarContent className="bg-black-100">
+          <SidebarGroup className="flex flex-col gap-6">
+            <SidebarGroupLabel className="text-black font-bold text-xl">
               PayWise
             </SidebarGroupLabel>
             <SidebarGroupContent>

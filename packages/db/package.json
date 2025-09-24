@@ -2,17 +2,15 @@
   "name": "@repo/db",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "db:seed": "ts-node ./prisma/seed.ts"
+    "db:seed": "ts-node ./prisma/seed.ts",
+    "db:generate": "npx prisma generate"
   },
   "exports": {
     "./client": "./src/index.ts"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
-    "@types/bcrypt": "^6.0.0",
     "@types/node": "^22.15.3",
     "prisma": "6.13.0"
   },
@@ -20,8 +18,6 @@
   "author": "virtuality0",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "6.13.0",
-    "bcrypt": "^6.0.0",
-    "ts-node": "^10.9.2"
+    "@prisma/client": "6.13.0"
   }
 }

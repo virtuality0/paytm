@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import db from "@repo/db/client";
+import { createClerkClient } from "@clerk/nextjs/server";
 
 // Using Clerk/Svix webhook secret provided in your dashboard
 const WEBHOOK_SECRET = process.env.SIGNING_SECRET ?? "";
 
-async function verifySignature(rawBody: string, headerPayload: Record<string, string>) {
+async function verifySignature(
+  rawBody: string,
+  headerPayload: Record<string, string>,
+) {
   // Minimal verification placeholder. Prefer using @svix/nextjs for production.
   // If no secret is set, reject.
   if (!WEBHOOK_SECRET) return false;
@@ -41,9 +45,13 @@ export async function POST(req: NextRequest) {
   try {
     if (type === "user.created") {
       const email = data?.email_addresses?.[0]?.email_address ?? null;
-      const name = data?.first_name && data?.last_name ? `${data.first_name} ${data.last_name}` : data?.first_name ?? null;
+      const name =
+        data?.first_name && data?.last_name
+          ? `${data.first_name} ${data.last_name}`
+          : (data?.first_name ?? null);
 
-      if (!email) return NextResponse.json({ success : false, message : "No email found" });
+      if (!email)
+        return NextResponse.json({ success: false, message: "No email found" });
 
       const user = await db.user.upsert({
         where: { email },
@@ -57,34 +65,48 @@ export async function POST(req: NextRequest) {
         create: { userId: user.id, amount: 0, locked: 0 },
       });
 
+      const clerkClient = createClerkClient({
+        secretKey: process.env.CLERK_SECRET_KEY,
+      });
+
+      await clerkClient.users.updateUserMetadata(data?.id, {
+        publicMetadata: {
+          dbUserId: user.id,
+        },
+      });
+
       return NextResponse.json({ ok: true });
     }
 
     if (type === "user.deleted") {
       const email = data?.email_addresses?.[0]?.email_address ?? null;
 
-      if (!email) return NextResponse.json({ success : false, message : "No email found" });
+      if (!email)
+        return NextResponse.json({ success: false, message: "No email found" });
 
       const user = await db.user.findUnique({ where: { email } });
-      if(!user){
+      if (!user) {
         return NextResponse.json({
-            success : false, 
-            message : `No user found with this email`
-        })
-    }
+          success: false,
+          message: `No user found with this email`,
+        });
+      }
 
-    await db.user.delete({
-        where : {
-            id : user.id
-        }
-    }) 
+      await db.user.delete({
+        where: {
+          id: user.id,
+        },
+      });
 
       return NextResponse.json({ ok: true });
     }
 
     return NextResponse.json({ ok: true });
   } catch (e) {
-    return NextResponse.json({ error: "Webhook handler error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Webhook handler error" },
+      { status: 500 },
+    );
   }
 }
 

@@ -15,8 +15,10 @@ model User {
   password     String?
   createdAt    DateTime             @default(now())
   modifiedAt   DateTime?
-  balance      Balance[]
+  balance      Balance?
   transactions OnRampTransactions[]
+  sentTransfers     P2PTransactions[] @relation("SenderTransactions")
+  receivedTransfers P2PTransactions[] @relation("ReceiverTransactions")
 }
 
 model Balance {
@@ -36,6 +38,19 @@ model OnRampTransactions {
   provider  String
   startTime DateTime
   user      User         @relation(fields: [userId], references: [id], onDelete : Cascade)
+}
+
+model P2PTransactions {
+  id         String   @id @default(cuid())
+  amount     Int
+  timestamp  DateTime @default(now())
+  senderId   String
+  receiverId String
+  sender     User     @relation("SenderTransactions", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver   User     @relation("ReceiverTransactions", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@index([senderId])
+  @@index([receiverId])
 }
 
 enum OnRampStatus {

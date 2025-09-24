@@ -4,14 +4,16 @@ const prismaClientSingleton = () => {
   return new PrismaClient();
 };
 
-type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
+export type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
 
-const globalPrisma = globalThis as unknown as {
+const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClientSingleton | undefined;
 };
 
-const prisma = globalPrisma.prisma ?? prismaClientSingleton();
+const db = globalForPrisma.prisma ?? prismaClientSingleton();
 
-export default prisma;
+export default db;
 
-if (process.env.NODE_ENV !== "production") globalPrisma.prisma = prisma;
+// Export the type for better TypeScript support
+export type { PrismaClient } from "@prisma/client";
+

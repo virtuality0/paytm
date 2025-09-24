@@ -3,7 +3,7 @@ import { SignUp } from "@clerk/nextjs";
 
 export default function SignUpPage() {
   return (
-    <main className="min-h-screen w-full bg-black-100 flex items-center justify-center p-4">
+    <main className="min-h-screen w-full bg-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <SignUp 
           path="/sign-up"
@@ -19,19 +19,19 @@ export default function SignUpPage() {
             },
             elements: {
               rootBox: "mx-auto",
-              card: "bg-white border border-gray-100 shadow-none",
-              headerTitle: "text-2xl text-black-100",
-              headerSubtitle: "text-xs text-gray-100",
-              socialButtonsBlockButton: "bg-white text-black-100 border border-gray-100 hover:bg-gray-50",
-              socialButtonsBlockButtonText: "text-black-100",
+              card: "bg-white border border-black-100 shadow-none",
+              headerTitle: "text-2xl text-white",
+              headerSubtitle: "text-xs text-black-100",
+              socialButtonsBlockButton: "bg-white text-white border border-black-100 hover:bg-gray-50",
+              socialButtonsBlockButtonText: "text-white",
               dividerLine: "bg-gray-200",
               dividerText: "text-gray-500",
-              formFieldLabel: "text-black-100",
-              formFieldInput: "bg-white text-black-100 border-gray-100",
-              footer: "text-gray-100",
-              footerActionText: "text-gray-100",
+              formFieldLabel: "text-white",
+              formFieldInput: "bg-white text-white border-black-100",
+              footer: "text-black-100",
+              footerActionText: "text-black-100",
               footerActionLink: "text-blue-100 font-medium",
-              formButtonPrimary: "bg-black-100 text-white",
+              formButtonPrimary: "bg-white text-black",
             },
           }}
         />
