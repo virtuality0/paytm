@@ -5,6 +5,7 @@ const __dirname = path.dirname(__filename);
 
 const nextConfig = {
   transpilePackages: ["@repo/ui"],
+  output: "standalone", // Enable standalone output for Docker
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
