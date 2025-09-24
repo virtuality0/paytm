@@ -7,7 +7,8 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
-    "clean": "rm -rf packages/*/node_modules && rm -rf apps/*/node_modules"
+    "clean": "rm -rf packages/*/node_modules && rm -rf apps/*/node_modules",
+    "db:generate" : "cd packages/db && npx prisma generate && cd ../.."
   },
   "devDependencies": {
     "prettier": "^3.6.2",

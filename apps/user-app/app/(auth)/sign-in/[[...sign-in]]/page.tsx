@@ -11,18 +11,19 @@ export default function SignInPage() {
           signUpUrl="/sign-up"
           appearance={{
             variables: {
-              colorPrimary: '#000000',
-              colorBackground: '#ffffff',
-              colorText: '#000000',
-              colorTextSecondary: '#6b7280',
-              borderRadius: '0.5rem',
+              colorPrimary: "#000000",
+              colorBackground: "#ffffff",
+              colorText: "#000000",
+              colorTextSecondary: "#6b7280",
+              borderRadius: "0.5rem",
             },
             elements: {
               rootBox: "mx-auto",
               card: "bg-white border border-black-100 shadow-none",
               headerTitle: "text-2xl text-white",
               headerSubtitle: "text-xs text-black-100",
-              socialButtonsBlockButton: "bg-white text-white border border-black-100 hover:bg-gray-50",
+              socialButtonsBlockButton:
+                "bg-white text-white border border-black-100 hover:bg-gray-50",
               socialButtonsBlockButtonText: "text-white",
               dividerLine: "bg-gray-200",
               dividerText: "text-gray-500",
@@ -39,4 +40,3 @@ export default function SignInPage() {
     </main>
   );
 }
-

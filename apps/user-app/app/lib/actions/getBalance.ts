@@ -1,4 +1,4 @@
-'use server';
+"use server";
 import { getCurrentUserMetadata } from "@/helpers/getCurrentUserMetadata";
 import db from "@repo/db/client";
 

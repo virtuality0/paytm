@@ -3,11 +3,11 @@ import { TransactionType } from "@/types/transactionType";
 import { IndianRupeeIcon } from "lucide-react";
 
 interface TransactionsProps {
-    transactions : TransactionType[];
+  transactions: TransactionType[];
 }
 
-export default function Transactions({transactions} : TransactionsProps) {
-    return (
+export default function Transactions({ transactions }: TransactionsProps) {
+  return (
     <Card className="w-[75%] bg-black-100 px-4 py-2">
       <CardTitle className="text-black font-bold text-xl">
         Recent Transactions
@@ -34,5 +34,5 @@ export default function Transactions({transactions} : TransactionsProps) {
         })}
       </CardContent>
     </Card>
-    )
+  );
 }

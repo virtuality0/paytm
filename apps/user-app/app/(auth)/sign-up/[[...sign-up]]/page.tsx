@@ -5,24 +5,25 @@ export default function SignUpPage() {
   return (
     <main className="min-h-screen w-full bg-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <SignUp 
+        <SignUp
           path="/sign-up"
           routing="path"
           signInUrl="/sign-in"
           appearance={{
             variables: {
-              colorPrimary: '#000000',
-              colorBackground: '#ffffff',
-              colorText: '#000000',
-              colorTextSecondary: '#6b7280',
-              borderRadius: '0.5rem',
+              colorPrimary: "#000000",
+              colorBackground: "#ffffff",
+              colorText: "#000000",
+              colorTextSecondary: "#6b7280",
+              borderRadius: "0.5rem",
             },
             elements: {
               rootBox: "mx-auto",
               card: "bg-white border border-black-100 shadow-none",
               headerTitle: "text-2xl text-white",
               headerSubtitle: "text-xs text-black-100",
-              socialButtonsBlockButton: "bg-white text-white border border-black-100 hover:bg-gray-50",
+              socialButtonsBlockButton:
+                "bg-white text-white border border-black-100 hover:bg-gray-50",
               socialButtonsBlockButtonText: "text-white",
               dividerLine: "bg-gray-200",
               dividerText: "text-gray-500",
@@ -39,4 +40,3 @@ export default function SignUpPage() {
     </main>
   );
 }
-

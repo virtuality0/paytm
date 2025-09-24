@@ -47,10 +47,10 @@ export async function getOnRampTransactions() {
   const userId = await getCurrentUserMetadata();
 
   if (!userId) {
-    return ({
+    return {
       success: false,
       message: "Not authorized",
-    });
+    };
   }
 
   try {
@@ -69,14 +69,14 @@ export async function getOnRampTransactions() {
       },
     });
 
-    return ({
+    return {
       success: true,
       data: transactions,
-    });
+    };
   } catch (err) {
-    return ({
+    return {
       success: false,
       message: "Something went wrong!",
-    });
-}
+    };
+  }
 }

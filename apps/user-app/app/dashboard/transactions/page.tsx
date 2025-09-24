@@ -14,17 +14,15 @@ export default function TransactionsPage() {
         if (response.success && response.data) {
           setTransactions(response.data);
         } else {
-          console.error('Failed to fetch transactions:', response.message);
+          console.error("Failed to fetch transactions:", response.message);
         }
       } catch (error) {
-        console.error('Error fetching transactions:', error);
+        console.error("Error fetching transactions:", error);
       }
     };
-    
+
     fetchTransactions();
   }, []);
 
-  return (
-    <Transactions transactions={transactions} />
-  );
+  return <Transactions transactions={transactions} />;
 }

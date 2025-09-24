@@ -30,12 +30,12 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
         >
           {children}
-      <ToastContainer
-        position="top-right"
-        limit={2}
-        autoClose={3000}
-        newestOnTop={true}
-      />
+          <ToastContainer
+            position="top-right"
+            limit={2}
+            autoClose={3000}
+            newestOnTop={true}
+          />
         </body>
       </html>
     </ClerkProvider>

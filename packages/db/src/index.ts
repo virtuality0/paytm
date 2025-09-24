@@ -16,4 +16,3 @@ export default db;
 
 // Export the type for better TypeScript support
 export type { PrismaClient } from "@prisma/client";
-
